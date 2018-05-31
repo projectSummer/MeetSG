@@ -1,33 +1,38 @@
 import React, { Component } from 'react';
-import Component1 from './Component/Component1';
-import Component2 from './Component/Component2';
-import Component3 from './Component/Component3';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import Main from './Component/Main';
+import Header from './Component/Header';
+import AddEvent from './Component/AddEvent';
 
-/*
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-*/
+import { View, Text } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View>
-        <Text>Hello World!</Text>
-        <Component1/>
-        <Component3/>
-        <Component2/>
-      </View>
-    );
-  }
+
+const RootStack = createStackNavigator(
+	{
+	Home: {
+		screen: Main,
+	},
+	AddEv: AddEvent,
+	},	
+	{
+		initialRouteName: 'Home',
+	}
+);
+
+export default class App extends React.Component {
+	render() {
+		return (
+			<RootStack />
+		);
+	}
 }
+
+
+// export default class App extends Component {
+
+// 	render() {
+// 		return (
+// 			<Main />
+// 		);
+// 	}
+// }

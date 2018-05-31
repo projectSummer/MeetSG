@@ -7,11 +7,16 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-export default class Component1 extends Component {
+export default class AddEvent extends Component {
+
+  static navigationOptions = {
+    header: null
+  }
 
   render() {
     return (
       <View>
+      <Text>Add Event</Text>
       </View>
     );
   }
