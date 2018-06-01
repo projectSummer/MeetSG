@@ -10,16 +10,21 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-//import realm from '../Database/AllSchemas';
+import realm from '../Database/AllSchemas';
 
 export default class Main extends Component {
 
   HandleAddEvent() {
     console.log('handle event');
-    this.props.navigation.navigate('AddEv');
-    //realm.insertEvent();
-    // realm.getPath();
-    // realm.queryEvent();
+    //this.props.navigation.navigate('AddEv');
+
+    // const newEvent = {
+    //   id: Math.floor(Date.now() / 1000),
+    //   name: 'event'
+    // };
+    // realm.insertEvent(newEvent);
+    //realm.getPath();
+    console.log(realm.queryEvent());
     // realm.deleteModels();
 
   }
