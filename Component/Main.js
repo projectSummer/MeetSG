@@ -24,9 +24,12 @@ export default class Main extends Component {
     // };
     // realm.insertEvent(newEvent);
     //realm.getPath();
-    console.log(realm.queryEvent());
     // realm.deleteModels();
 
+  }
+
+  GoToSettingsPage() {
+    this.props.navigation.navigate('Settings');
   }
 
   static navigationOptions = {
@@ -39,7 +42,7 @@ export default class Main extends Component {
       <View style={styles.container}>
 
         <Header addNewEvent={this.HandleAddEvent.bind(this)}/>
-        <Footer />
+        <Footer goToSettings={this.GoToSettingsPage.bind(this)}/>
       </View>
     );
   }

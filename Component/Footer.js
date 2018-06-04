@@ -9,6 +9,10 @@ import {
 
 export default class Footer extends Component<Props> {
 
+  SettingsPage() {
+    this.props.goToSettings();
+  }
+
   render() {
 
     return (
@@ -37,7 +41,7 @@ export default class Footer extends Component<Props> {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.footerButtons}>
+        <TouchableOpacity style={styles.footerButtons} onPress={this.SettingsPage.bind(this)}>
           <View>
             <Text style={styles.footerText}>Settings</Text>
           </View>
