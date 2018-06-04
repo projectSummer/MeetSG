@@ -35,7 +35,6 @@ Realm.open(realmConfig)
     realm.write(() => {
       realm.create('Event', newEvent);
     });
-    console.log('realm object created');
   })
   .catch(error => {
     console.log(error);
@@ -44,11 +43,11 @@ Realm.open(realmConfig)
 
 //Reset database to it's original dummy value
 function resetRealmFile() {
-  Realm.deleteFile(realmConfig); //Delete old database file
 
   Realm.open(realmConfig)
     .then(realm => {
       realm.write(() => {
+        realm.deleteAll(); //delete all objects
         const newEvent1 = {
           id: 1,
           name: 'event',
@@ -88,6 +87,8 @@ Realm.open(realmConfig)
 //   let path = Realm.defaultPath;
 //   console.log (path);
 // }
+
+//Realm.deleteFile(realmConfig); //Delete old database file
 
 // function deleteModels() {
 // Realm.open(realmConfig)
