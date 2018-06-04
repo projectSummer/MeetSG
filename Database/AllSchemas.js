@@ -5,7 +5,9 @@ export const EventSchema = {
 	primaryKey: 'id',
 	properties: {
 		id: 'int',
-		name: 'string'
+		name: 'string',
+    location: 'string',
+    type: 'string',
 	}
 };
 
@@ -49,13 +51,17 @@ function resetRealmFile() {
       realm.write(() => {
         const newEvent1 = {
           id: 1,
-          name: 'event'
+          name: 'event',
+          location: 'Bishan',
+          type: 'Workout'
         };
         realm.create('Event', newEvent1);
 
         const newEvent2 = {
           id: 2,
-          name: 'event'
+          name: 'event2',
+          location: 'Yio Chu Kang',
+          type: 'Soccer'
         };
         realm.create('Event', newEvent2);
       });
