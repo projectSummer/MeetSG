@@ -5,25 +5,27 @@ export const EventSchema = {
 	primaryKey: 'id',
 	properties: {
 		id: 'int',
-		name: 'string'
+		name: 'string',
+    location: 'string',
+    type: 'string',
 	}
 };
 
-export const UserSchema = {
-  name: 'User',
-  primaryKey: 'id',
-  properties: {
-    id: 'int',
-    username: 'string',
-    password: 'string',
-    events: 'Event[]'
-  }
-}
+// export const UserSchema = {
+//   name: 'User',
+//   primaryKey: 'email',
+//   properties: {
+//     email: 'string',
+//     username: 'string',
+//     password: 'string',
+//     events: 'Event[]'
+//   }
+// }
 
 
 const realmConfig = {
   path: 'database.realm',
-  schema: [EventSchema, UserSchema]
+  schema: [EventSchema]
 }
 
 function insertEvent(newEvent) {
@@ -31,22 +33,48 @@ function insertEvent(newEvent) {
 Realm.open(realmConfig)
   .then(realm => {
     realm.write(() => {
-      const myEvent = realm.create('Event', newEvent);
+      realm.create('Event', newEvent);
     });
-    console.log('realm object created');
   })
   .catch(error => {
     console.log(error);
   });
 }
 
-function queryEvent() {
+//Reset database to it's original dummy value
+function resetRealmFile() {
+
+  Realm.open(realmConfig)
+    .then(realm => {
+      realm.write(() => {
+        realm.deleteAll(); //delete all objects
+        const newEvent1 = {
+          id: 1,
+          name: 'event',
+          location: 'Bishan',
+          type: 'Workout'
+        };
+        realm.create('Event', newEvent1);
+
+        const newEvent2 = {
+          id: 2,
+          name: 'event2',
+          location: 'Yio Chu Kang',
+          type: 'Soccer'
+        };
+        realm.create('Event', newEvent2);
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+}
+
+function queryAllEvent() {
   // Get the default Realm with support for our objects
   let allEvents;
 Realm.open(realmConfig)
   .then(realm => {
     allEvents = realm.objects('Event');
-    console.log('realm object queried');
     console.log(allEvents);
   })
   .catch(error => {
@@ -55,25 +83,24 @@ Realm.open(realmConfig)
   return allEvents;
 }
 
-function getPath() {
-  let path = Realm.defaultPath;
-  console.log (path);
-}
+// function getPath() {
+//   let path = Realm.defaultPath;
+//   console.log (path);
+// }
 
-function deleteModels() {
-Realm.open(realmConfig)
-  .then(realm => {
-    realm.write(() => {
-      realm.deleteModel('User');
-      realm.deleteModel('Event');
-    });
-  })
-  .catch(error => {
-    console.log(error);
-  });
-}
+//Realm.deleteFile(realmConfig); //Delete old database file
 
-function deleteRealmFile() {
-  Realm.deleteFile(realmConfig);
-}
-export default { queryEvent, insertEvent, getPath, deleteModels };
+// function deleteModels() {
+// Realm.open(realmConfig)
+//   .then(realm => {
+//     realm.write(() => {
+//       realm.deleteModel('User');
+//       realm.deleteModel('Event');
+//     });
+//   })
+//   .catch(error => {
+//     console.log(error);
+//   });
+// }
+
+export default { queryAllEvent, insertEvent, resetRealmFile };

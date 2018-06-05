@@ -14,19 +14,12 @@ import realm from '../Database/AllSchemas';
 
 export default class Main extends Component {
 
-  HandleAddEvent() {
-    console.log('handle event');
-    //this.props.navigation.navigate('AddEv');
+  GoToAddEvent() {
+    this.props.navigation.navigate('AddEv');
+  }
 
-    // const newEvent = {
-    //   id: Math.floor(Date.now() / 1000),
-    //   name: 'event'
-    // };
-    // realm.insertEvent(newEvent);
-    //realm.getPath();
-    console.log(realm.queryEvent());
-    // realm.deleteModels();
-
+  GoToSettingsPage() {
+    this.props.navigation.navigate('Settings');
   }
 
   static navigationOptions = {
@@ -38,8 +31,8 @@ export default class Main extends Component {
     return (
       <View style={styles.container}>
 
-        <Header addNewEvent={this.HandleAddEvent.bind(this)}/>
-        <Footer />
+        <Header addNewEvent={this.GoToAddEvent.bind(this)}/>
+        <Footer goToSettings={this.GoToSettingsPage.bind(this)}/>
       </View>
     );
   }
