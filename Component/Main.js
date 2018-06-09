@@ -32,7 +32,7 @@ export default class Main extends Component {
       <View style={styles.container}>
 
         <Header addNewEvent={this.GoToAddEvent.bind(this)}/>
-        <Footer goToSettings={this.GoToSettingsPage.bind(this)}/>
+        {/*<Footer goToSettings={this.GoToSettingsPage.bind(this)}/>*/}
       </View>
     );
   }

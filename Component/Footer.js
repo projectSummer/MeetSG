@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-export default class Footer extends Component<Props> {
+class Footer extends Component<Props> {
 
   SettingsPage() {
     this.props.goToSettings();
@@ -51,7 +51,7 @@ export default class Footer extends Component<Props> {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = ({
   footer: {
     position: 'absolute',
     bottom: 0,
@@ -73,3 +73,7 @@ const styles = StyleSheet.create({
     padding: 4
   }
 });
+
+export default function createStyles(overrides = {}) {
+    return StyleSheet.create({...styles, ...overrides})
+}
