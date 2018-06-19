@@ -23,14 +23,14 @@ export default class Settings extends Component {
 
   render() {
     return (
-      <View>
-        <TouchableOpacity style={styles.button1} onPress={this.ResetDatabase.bind(this)}>
-          <Text>Reset database</Text>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.button} onPress={this.ResetDatabase.bind(this)}>
+          <Text style={styles.text}>Reset database</Text>
         </TouchableOpacity>
 
         
-        <TouchableOpacity style={styles.button2} onPress={this.ViewDatabase.bind(this)}>
-          <Text>View database</Text>
+        <TouchableOpacity style={styles.button} onPress={this.ViewDatabase.bind(this)}>
+          <Text style={styles.text}>View database</Text>
         </TouchableOpacity>
 
       </View>
@@ -39,15 +39,20 @@ export default class Settings extends Component {
 }
 
 const styles = StyleSheet.create({
-  button1: {
+  button: {
     backgroundColor: 'blue',
     height:50,
-    width: 100
+    width: 120,
+    margin: 10,
+    justifyContent: 'center'
   },
 
-  button2: {
-    backgroundColor: 'red',
-    height:50,
-    width: 100
+  text: {
+    color: 'white',
+    textAlign: 'center',
+
+  },
+  container: {
+    flexDirection: 'row',
   }
 });
