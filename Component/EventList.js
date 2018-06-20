@@ -29,24 +29,19 @@ export default class EventList extends Component {
   }
 
   _renderItem = ({item, index}) => {
-    return (<EventListItem item={item} index={index} />);
+    return (<EventListItem key={item.id} item={item} index={index} />);
   }
+  _keyExtractor = item => item.id.toString();
 
   render() {
-
     return (
-      <View style={styles.container}>
+      <View>
         <FlatList
           data={this.state.eventList}
-          renderItem={this._renderItem}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}     
         />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#b9bbbf'
-  }
-});

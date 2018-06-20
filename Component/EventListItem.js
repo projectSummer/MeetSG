@@ -17,10 +17,11 @@ export default class EventListItem extends Component {
 
     return (
       <View style={styles.container}>
+        <Text style={styles.header}>
+          Event name: {this.props.item.name} {"\n"}
+        </Text>
         <Text style={styles.text}>
-          Event name: {this.props.item.name}, {"\n"}
-          Event location: {this.props.item.location}, {"\n"}
-          Type of Event: {this.props.item.location}
+          {this.props.item.location}, {this.props.item.type}
         </Text>
       </View>
     );
@@ -29,10 +30,15 @@ export default class EventListItem extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#5d6f93',
-    margin: 10
+    backgroundColor: '#b9bbbf',
+    padding: 5
   },
   text: {
-    color: 'white'
+    color: 'black'
+  },
+  header: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold'
   }
 });
