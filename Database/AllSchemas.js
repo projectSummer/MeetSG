@@ -41,11 +41,19 @@ Realm.open(realmConfig)
   });
 }
 
-//Reset database to it's original dummy value
-function resetRealmFile() {
+export const queryAllEvents = () => new Promise((resolve, reject) => {    
+    Realm.open(realmConfig)
+      .then(realm => {  
+        let allEvents = realm.objects('Event');    
+        resolve(allEvents);  
+      }).catch((error) => {        
+        reject(error);  
+    });;
+});
 
-  Realm.open(realmConfig)
-    .then(realm => {
+export const resetRealmFile = () => new Promise((resolve, reject) => {    
+    Realm.open(realmConfig)
+      .then(realm => {  
       realm.write(() => {
         realm.deleteAll(); //delete all objects
         const newEvent1 = {
@@ -64,24 +72,12 @@ function resetRealmFile() {
         };
         realm.create('Event', newEvent2);
       });
-    }).catch(error => {
-      console.log(error);
-    });
-}
+      resolve();
+      }).catch((error) => {        
+        reject(error);  
+    });;
+});
 
-function queryAllEvent() {
-  // Get the default Realm with support for our objects
-  let allEvents;
-Realm.open(realmConfig)
-  .then(realm => {
-    allEvents = realm.objects('Event');
-    console.log(allEvents);
-  })
-  .catch(error => {
-    console.log(error);
-  });
-  return allEvents;
-}
 
 // function getPath() {
 //   let path = Realm.defaultPath;
@@ -103,4 +99,4 @@ Realm.open(realmConfig)
 //   });
 // }
 
-export default { queryAllEvent, insertEvent, resetRealmFile };
+export default { insertEvent };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import EventList from './EventList';
 import {
   Platform,
   StyleSheet,
@@ -7,33 +8,33 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import realm from '../Database/AllSchemas';
+import { resetRealmFile, queryAllEvents } from '../Database/AllSchemas';
 
 export default class Settings extends Component {
 
   ResetDatabase() {
     console.log("reset database");
-    realm.resetRealmFile();
+    //realm.resetRealmFile();
+    resetRealmFile();
   }
 
   ViewDatabase() {
     console.log("view database");
-    realm.queryAllEvent();
+    //realm.queryAllEvent();
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={this.ResetDatabase.bind(this)}>
-          <Text style={styles.text}>Reset database</Text>
-        </TouchableOpacity>
+      <View>
+        <View style={styles.container}>
+          <TouchableOpacity style={styles.button} onPress={this.ResetDatabase.bind(this)}>
+            <Text style={styles.text}>Reset database</Text>
+          </TouchableOpacity>
+        </View>
 
-        
-        <TouchableOpacity style={styles.button} onPress={this.ViewDatabase.bind(this)}>
-          <Text style={styles.text}>View database</Text>
-        </TouchableOpacity>
+        <EventList />
 
-      </View>
+        </View>
     );
   }
 }
