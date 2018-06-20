@@ -52,6 +52,8 @@ Realm.open(realmConfiguration)
   .then(realm => {
     realm.write(() => {
       realm.create('User', newUser);
+      let allUser = realm.objects('User');
+      console.log(allUser);
     });
   })
   .catch(error => {
@@ -59,11 +61,40 @@ Realm.open(realmConfiguration)
   });
 }
 
+function isEmptyObject( obj ) {
+    for ( var name in obj ) {
+        return false;
+    }
+    return true;
+}
+
+export const LoginToApp = (email, password) => new Promise((resolve, reject) => {    
+    Realm.open(realmConfiguration)
+      .then(realm => {  
+        let userFound = realm.objects('User').filtered('email = "' + email + '"');
+        if (!isEmptyObject(userFound))
+          resolve(true);
+        else resolve(false);
+      }).catch((error) => {        
+        reject(error);  
+    });;
+});
+
 export const queryAllEvents = () => new Promise((resolve, reject) => {    
     Realm.open(realmConfiguration)
       .then(realm => {  
         let allEvents = realm.objects('Event');    
-        resolve(allEvents);  
+        resolve(allEvents);
+      }).catch((error) => {        
+        reject(error);  
+    });;
+});
+
+export const queryAllUsers = () => new Promise((resolve, reject) => {    
+    Realm.open(realmConfiguration)
+      .then(realm => {  
+        let allUsers = realm.objects('User');    
+        resolve(allUsers);
       }).catch((error) => {        
         reject(error);  
     });;

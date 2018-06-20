@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EventList from './EventList';
+import UserList from './UserList';
 import {
   Platform,
   StyleSheet,
@@ -8,7 +9,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { fullResetRealmFile, resetRealmFile, queryAllEvents } from '../Database/AllSchemas';
+import { fullResetRealmFile, resetRealmFile } from '../Database/AllSchemas';
 
 export default class Settings extends Component {
 
@@ -37,6 +38,7 @@ export default class Settings extends Component {
         </View>
 
         <EventList />
+        <UserList />
 
         </View>
     );

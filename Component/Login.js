@@ -8,7 +8,7 @@ import {
   Button
 } from 'react-native';
 
-import realm from '../Database/AllSchemas';
+import { LoginToApp } from '../Database/AllSchemas';
 import t from 'tcomb-form-native';
 
 const Form = t.form.Form;
@@ -45,9 +45,19 @@ export default class Login extends Component {
   handleSubmit = () => {
     const value = this._form.getValue(); // use that ref to get the form value
     if (!isEmpty(value)) {
-      console.log(user);
+      LoginToApp(value.email, value.password).then((isRealUser) => {
+        if (isRealUser)
+        this.props.navigation.navigate('Home');
+        else alert("Invalid username and password");
+      }).catch((error) => {
+        console.log(isRealUser);
+      });
+      
     }
+  }
 
+  GoToSignupPage() {
+    this.props.navigation.navigate('Signup');
   }
 
   render() {
@@ -63,6 +73,9 @@ export default class Login extends Component {
           title="Login"
           onPress={this.handleSubmit}
         />
+        <TouchableOpacity style={styles.signupBtn} onPress={this.GoToSignupPage.bind(this)}>
+          <Text style={styles.text}>No account? Signup here!</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -74,5 +87,16 @@ const styles = StyleSheet.create({
     marginTop: 50,
     padding: 20,
     backgroundColor: '#ffffff',
+  },
+  signupBtn: {
+    margin: 10,
+    backgroundColor: 'grey',
+    height: 30,
+    justifyContent: 'center',
+
+  },
+  text: {
+    color: 'white',
+    textAlign: 'center'
   },
 });

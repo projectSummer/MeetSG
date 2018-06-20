@@ -55,9 +55,8 @@ export default class Signup extends Component {
           username: value.username,
           password: value.password,
       }
-      //realm.insertUser(user);
+      realm.insertUser(user);
       this.props.navigation.navigate('Home');
-      console.log(user);
     }
 
   }
