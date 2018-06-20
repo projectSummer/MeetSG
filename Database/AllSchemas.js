@@ -8,19 +8,19 @@ export const EventSchema = {
 		name: 'string',
     location: 'string',
     type: 'string',
+    creator: 'string'
 	}
 };
 
-// export const UserSchema = {
-//   name: 'User',
-//   primaryKey: 'email',
-//   properties: {
-//     email: 'string',
-//     username: 'string',
-//     password: 'string',
-//     events: 'Event[]'
-//   }
-// }
+export const UserSchema = {
+  name: 'User',
+  primaryKey: 'email',
+  properties: {
+    email: 'string',
+    username: 'string',
+    password: 'string',
+  }
+};
 
 
 const realmConfig = {
@@ -28,9 +28,14 @@ const realmConfig = {
   schema: [EventSchema]
 }
 
+const realmConfiguration = {
+  path: 'db.realm',
+  schema: [EventSchema, UserSchema]
+}
+
 function insertEvent(newEvent) {
 // Get the default Realm with support for our objects
-Realm.open(realmConfig)
+Realm.open(realmConfiguration)
   .then(realm => {
     realm.write(() => {
       realm.create('Event', newEvent);
@@ -42,7 +47,7 @@ Realm.open(realmConfig)
 }
 
 export const queryAllEvents = () => new Promise((resolve, reject) => {    
-    Realm.open(realmConfig)
+    Realm.open(realmConfiguration)
       .then(realm => {  
         let allEvents = realm.objects('Event');    
         resolve(allEvents);  
@@ -52,30 +57,19 @@ export const queryAllEvents = () => new Promise((resolve, reject) => {
 });
 
 export const resetRealmFile = () => new Promise((resolve, reject) => {    
-    Realm.open(realmConfig)
+    Realm.open(realmConfiguration)
       .then(realm => {  
       realm.write(() => {
         realm.deleteAll(); //delete all objects
-        const newEvent1 = {
-          id: 1,
-          name: 'event',
-          location: 'Bishan',
-          type: 'Workout'
-        };
-        realm.create('Event', newEvent1);
-
-        const newEvent2 = {
-          id: 2,
-          name: 'event2',
-          location: 'Yio Chu Kang',
-          type: 'Soccer'
-        };
-        realm.create('Event', newEvent2);
-      });
-      resolve();
+        resolve();
+      }); 
       }).catch((error) => {        
         reject(error);  
     });;
+});
+
+export const fullResetRealmFile = () => new Promise((resolve, reject) => {    
+  Realm.deleteFile(realmConfig);
 });
 
 

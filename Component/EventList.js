@@ -34,6 +34,7 @@ export default class EventList extends Component {
   _keyExtractor = item => item.id.toString();
 
   render() {
+
     return (
       <View>
         <FlatList

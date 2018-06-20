@@ -8,19 +8,19 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { resetRealmFile, queryAllEvents } from '../Database/AllSchemas';
+import { fullResetRealmFile, resetRealmFile, queryAllEvents } from '../Database/AllSchemas';
 
 export default class Settings extends Component {
 
   ResetDatabase() {
     console.log("reset database");
-    //realm.resetRealmFile();
     resetRealmFile();
   }
 
-  ViewDatabase() {
-    console.log("view database");
-    //realm.queryAllEvent();
+
+  FullResetDatabase() {
+    console.log("full reset database");
+    fullResetRealmFile();
   }
 
   render() {
@@ -29,6 +29,10 @@ export default class Settings extends Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.button} onPress={this.ResetDatabase.bind(this)}>
             <Text style={styles.text}>Reset database</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={this.FullResetDatabase.bind(this)}>
+            <Text style={styles.text}>Full Reset database</Text>
           </TouchableOpacity>
         </View>
 
