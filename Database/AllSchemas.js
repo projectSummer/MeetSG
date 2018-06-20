@@ -46,6 +46,19 @@ Realm.open(realmConfiguration)
   });
 }
 
+function insertUser(newUser) {
+// Get the default Realm with support for our objects
+Realm.open(realmConfiguration)
+  .then(realm => {
+    realm.write(() => {
+      realm.create('User', newUser);
+    });
+  })
+  .catch(error => {
+    console.log(error);
+  });
+}
+
 export const queryAllEvents = () => new Promise((resolve, reject) => {    
     Realm.open(realmConfiguration)
       .then(realm => {  
@@ -93,4 +106,4 @@ export const fullResetRealmFile = () => new Promise((resolve, reject) => {
 //   });
 // }
 
-export default { insertEvent };
+export default { insertEvent, insertUser };
