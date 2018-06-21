@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import EventList from './EventList';
+import UserList from './UserList';
 import {
   Platform,
   StyleSheet,
@@ -7,47 +9,57 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import realm from '../Database/AllSchemas';
+import { fullResetRealmFile, resetRealmFile } from '../Database/AllSchemas';
 
 export default class Settings extends Component {
 
   ResetDatabase() {
     console.log("reset database");
-    realm.resetRealmFile();
+    resetRealmFile();
   }
 
-  ViewDatabase() {
-    console.log("view database");
-    realm.queryAllEvent();
+
+  FullResetDatabase() {
+    console.log("full reset database");
+    fullResetRealmFile();
   }
 
   render() {
     return (
       <View>
-        <TouchableOpacity style={styles.button1} onPress={this.ResetDatabase.bind(this)}>
-          <Text>Reset database</Text>
-        </TouchableOpacity>
+        <View style={styles.container}>
+          <TouchableOpacity style={styles.button} onPress={this.ResetDatabase.bind(this)}>
+            <Text style={styles.text}>Reset database</Text>
+          </TouchableOpacity>
 
-        
-        <TouchableOpacity style={styles.button2} onPress={this.ViewDatabase.bind(this)}>
-          <Text>View database</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={this.FullResetDatabase.bind(this)}>
+            <Text style={styles.text}>Full Reset database</Text>
+          </TouchableOpacity>
+        </View>
 
-      </View>
+        <EventList />
+        <UserList />
+
+        </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  button1: {
+  button: {
     backgroundColor: 'blue',
     height:50,
-    width: 100
+    width: 120,
+    margin: 10,
+    justifyContent: 'center'
   },
 
-  button2: {
-    backgroundColor: 'red',
-    height:50,
-    width: 100
+  text: {
+    color: 'white',
+    textAlign: 'center',
+
+  },
+  container: {
+    flexDirection: 'row',
   }
 });

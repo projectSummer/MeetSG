@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Main from './Component/Main';
-import Header from './Component/Header';
 import AddEvent from './Component/AddEvent';
 import Settings from './Component/Settings';
+import Login from './Component/Login';
+import Signup from './Component/Signup';
 
 import { View, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
@@ -13,11 +14,13 @@ const RootStack = createStackNavigator(
 	Home: {
 		screen: Main,
 	},
+	Login: Login,
+	Signup: Signup,
 	AddEv: AddEvent,
 	Settings: Settings,
 	},
 	{
-		initialRouteName: 'Home',
+		initialRouteName: 'Login',
 	}
 );
 
@@ -28,13 +31,3 @@ export default class App extends React.Component {
 		);
 	}
 }
-
-
-// export default class App extends Component {
-
-// 	render() {
-// 		return (
-// 			<Main />
-// 		);
-// 	}
-// }

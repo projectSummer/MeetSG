@@ -8,19 +8,19 @@ export const EventSchema = {
 		name: 'string',
     location: 'string',
     type: 'string',
+    creator: 'string'
 	}
 };
 
-// export const UserSchema = {
-//   name: 'User',
-//   primaryKey: 'email',
-//   properties: {
-//     email: 'string',
-//     username: 'string',
-//     password: 'string',
-//     events: 'Event[]'
-//   }
-// }
+export const UserSchema = {
+  name: 'User',
+  primaryKey: 'email',
+  properties: {
+    email: 'string',
+    username: 'string',
+    password: 'string',
+  }
+};
 
 
 const realmConfig = {
@@ -28,9 +28,14 @@ const realmConfig = {
   schema: [EventSchema]
 }
 
+const realmConfiguration = {
+  path: 'db.realm',
+  schema: [EventSchema, UserSchema]
+}
+
 function insertEvent(newEvent) {
 // Get the default Realm with support for our objects
-Realm.open(realmConfig)
+Realm.open(realmConfiguration)
   .then(realm => {
     realm.write(() => {
       realm.create('Event', newEvent);
@@ -41,47 +46,76 @@ Realm.open(realmConfig)
   });
 }
 
-//Reset database to it's original dummy value
-function resetRealmFile() {
-
-  Realm.open(realmConfig)
-    .then(realm => {
-      realm.write(() => {
-        realm.deleteAll(); //delete all objects
-        const newEvent1 = {
-          id: 1,
-          name: 'event',
-          location: 'Bishan',
-          type: 'Workout'
-        };
-        realm.create('Event', newEvent1);
-
-        const newEvent2 = {
-          id: 2,
-          name: 'event2',
-          location: 'Yio Chu Kang',
-          type: 'Soccer'
-        };
-        realm.create('Event', newEvent2);
-      });
-    }).catch(error => {
-      console.log(error);
-    });
-}
-
-function queryAllEvent() {
-  // Get the default Realm with support for our objects
-  let allEvents;
-Realm.open(realmConfig)
+function insertUser(newUser) {
+// Get the default Realm with support for our objects
+Realm.open(realmConfiguration)
   .then(realm => {
-    allEvents = realm.objects('Event');
-    console.log(allEvents);
+    realm.write(() => {
+      realm.create('User', newUser);
+      let allUser = realm.objects('User');
+      console.log(allUser);
+    });
   })
   .catch(error => {
     console.log(error);
   });
-  return allEvents;
 }
+
+function isEmptyObject( obj ) {
+    for ( var name in obj ) {
+        return false;
+    }
+    return true;
+}
+
+export const LoginToApp = (email, password) => new Promise((resolve, reject) => {    
+    Realm.open(realmConfiguration)
+      .then(realm => {  
+        let userFound = realm.objects('User').filtered('email = "' + email + '"');
+        if (!isEmptyObject(userFound))
+          resolve(true);
+        else resolve(false);
+      }).catch((error) => {        
+        reject(error);  
+    });;
+});
+
+export const queryAllEvents = () => new Promise((resolve, reject) => {    
+    Realm.open(realmConfiguration)
+      .then(realm => {  
+        let allEvents = realm.objects('Event');    
+        resolve(allEvents);
+      }).catch((error) => {        
+        reject(error);  
+    });;
+});
+
+export const queryAllUsers = () => new Promise((resolve, reject) => {    
+    Realm.open(realmConfiguration)
+      .then(realm => {  
+        let allUsers = realm.objects('User');    
+        resolve(allUsers);
+      }).catch((error) => {        
+        reject(error);  
+    });;
+});
+
+export const resetRealmFile = () => new Promise((resolve, reject) => {    
+    Realm.open(realmConfiguration)
+      .then(realm => {  
+      realm.write(() => {
+        realm.deleteAll(); //delete all objects
+        resolve();
+      }); 
+      }).catch((error) => {        
+        reject(error);  
+    });;
+});
+
+export const fullResetRealmFile = () => new Promise((resolve, reject) => {    
+  Realm.deleteFile(realmConfig);
+});
+
 
 // function getPath() {
 //   let path = Realm.defaultPath;
@@ -103,4 +137,4 @@ Realm.open(realmConfig)
 //   });
 // }
 
-export default { queryAllEvent, insertEvent, resetRealmFile };
+export default { insertEvent, insertUser };
